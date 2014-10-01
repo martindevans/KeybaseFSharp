@@ -1,0 +1,12 @@
+*.ncrunchproject
+*.testsettings
+*.suo
+*.cache
+*.user
+*.vsmdi
+*.ncrunchsolution
+Keybase.Test/bin
+Keybase.Test/obj
+Keybase/bin
+Keybase/obj
+packages
