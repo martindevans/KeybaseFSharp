@@ -10,23 +10,22 @@ namespace Keybase.Test
     {
         private static void AssertMartindevans(Lookup.UserResponse response)
         {
-            Assert.AreEqual(0, response.status.code);
-            Assert.AreEqual("OK", response.status.name);
+            Assert.AreEqual(0, response.Status.Code);
+            Assert.AreEqual("OK", response.Status.Name);
 
-            Assert.AreEqual(1, response.them.Length);
+            Assert.AreEqual(1, response.Them.Length);
 
-            Assert.AreEqual("55314fbf0ace243fe66afcf5cd60be00", response.them[0].id);
-            Assert.AreEqual("martindevans", response.them[0].basics.username);
-            Assert.AreEqual(1410965719, response.them[0].basics.ctime);
-            Assert.AreEqual(1410965719, response.them[0].basics.mtime);
-            Assert.AreEqual(22, response.them[0].basics.id_version);
-            Assert.AreEqual(6, response.them[0].basics.track_version);
-            Assert.AreEqual(1412036434, response.them[0].basics.last_id_change);
+            Assert.AreEqual("55314fbf0ace243fe66afcf5cd60be00", response.Them[0].Id);
+            Assert.AreEqual("martindevans", response.Them[0].Basics.Username);
+            Assert.AreEqual(1410965719, response.Them[0].Basics.CTime);
+            Assert.AreEqual(1410965719, response.Them[0].Basics.MTime);
+            Assert.AreEqual(22, response.Them[0].Basics.IdVersion);
+            Assert.AreEqual(1412036434, response.Them[0].Basics.LastIdChange);
         }
 
         private static void AssertNobody(Lookup.UserResponse response)
         {
-            Assert.IsTrue(response.them.Length == 0 || response.them.All(a => a == null));
+            Assert.IsTrue(response.Them.Length == 0 || response.Them.All(a => a == null));
         }
 
         private static readonly Random _r = new Random();

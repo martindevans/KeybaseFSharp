@@ -4,6 +4,7 @@ module Merkle =
 
     open System
     open Keybase.Response
+    open Keybase.Request
     open RestSharp
 
     type MerkleRootResponse = 
@@ -31,11 +32,11 @@ module Merkle =
         }
 
     let Root (seqno : Nullable<int>) (ctime : Nullable<int>) = 
-        Keybase.Response.MakeRequest<MerkleRootResponse> "_/api/1.0/merkle/root.json" Method.GET (fun a ->
+        MakeRequest<MerkleRootResponse> (MakeClient()) "_/api/1.0/merkle/root.json" Method.GET (fun a ->
             if seqno.HasValue then ignore (a.AddParameter ("seqno", seqno.Value))
             if ctime.HasValue then ignore (a.AddParameter ("ctime", ctime.Value))
             a :> IRestRequest
         )
 
     let Block (hash : string) = 
-        Keybase.Response.MakeRequest<MerkleBlockResponse> "_/api/1.0/merkle/block.json" Method.GET (fun a -> a.AddParameter("hash ", hash))
+        MakeRequest<MerkleBlockResponse> (MakeClient()) "_/api/1.0/merkle/block.json" Method.GET (fun a -> a.AddParameter("hash ", hash))

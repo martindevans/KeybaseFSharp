@@ -45,7 +45,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Autocomplete.cs" />
+    <Compile Include="AutocompleteTest.cs" />
     <Compile Include="KeyTest.cs" />
     <Compile Include="MerkleTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

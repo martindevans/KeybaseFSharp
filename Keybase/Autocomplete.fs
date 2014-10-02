@@ -6,53 +6,54 @@ module Autocomplete =
     open RestSharp
     open Newtonsoft.Json
     open Keybase.Response
+    open Keybase.Request
 
     type CompletionComponentScore = 
         {
-            //val: string
-            score: float
+            [<JsonProperty("val")>]Value: string
+            [<JsonProperty("score")>]Score: float
         }
 
     type CompletionComponentScoreFingerprint = 
         {
-            //val: string
-            score: float
-            algo: int
-            nbits: int
+            [<JsonProperty("val")>]Value: string
+            [<JsonProperty("score")>]Score: float
+            [<JsonProperty("algo")>]Algorithm: int
+            [<JsonProperty("nbits")>]NumberOfBits: int
         }
 
     type CompletionComponentScoreWebsite = 
         {
-            //val: string
-            score: float
-            protocol: string
+            [<JsonProperty("val")>]Value: string
+            [<JsonProperty("score")>]Score: float
+            [<JsonProperty("protocol")>]Protocol: string
         }
 
     type CompletionComponents = 
         {
-            username: CompletionComponentScore
-            key_fingerprint: CompletionComponentScoreFingerprint
-            github: CompletionComponentScore
-            twitter: CompletionComponentScore
-            reddit: CompletionComponentScore
-            coinbase: CompletionComponentScore
-            hackernews: CompletionComponentScore
-            websites: CompletionComponentScoreWebsite[]
+            [<JsonProperty("username")>]Username: CompletionComponentScore
+            [<JsonProperty("key_fingerprint")>]KeyFingerprint: CompletionComponentScoreFingerprint
+            [<JsonProperty("github")>]Github: CompletionComponentScore
+            [<JsonProperty("twitter")>]Twitter: CompletionComponentScore
+            [<JsonProperty("reddit")>]Reddit: CompletionComponentScore
+            [<JsonProperty("coinbase")>]Coinbase: CompletionComponentScore
+            [<JsonProperty("hackernews")>]Hackernews: CompletionComponentScore
+            [<JsonProperty("websites")>]Websites: CompletionComponentScoreWebsite[]
         }
 
     type Completion = 
         {
-            total_score: float
-            components: CompletionComponents
-            uid: string
-            thumbnail: string
+            [<JsonProperty("total_score")>]TotalScore: float
+            [<JsonProperty("components")>]Components: CompletionComponents
+            [<JsonProperty("uid")>]UID: string
+            [<JsonProperty("thumbnail")>]Thumbnail: string
         }
 
     type AutocompleteResponse =
         {
-            status: Status
-            completions: Completion[]
+            [<JsonProperty("status")>]Status: Status
+            [<JsonProperty("completions")>]Completions: Completion[]
         }
 
     let Autocomplete (incomplete : string) =
-        Response.MakeRequest<AutocompleteResponse> "_/api/1.0/user/autocomplete.json?q={incomplete}" Method.GET (fun a -> a.AddUrlSegment("incomplete", incomplete))
+        Request.MakeRequest<AutocompleteResponse> (Request.MakeClient()) "_/api/1.0/user/autocomplete.json?q={incomplete}" Method.GET (fun a -> a.AddUrlSegment("incomplete", incomplete))
