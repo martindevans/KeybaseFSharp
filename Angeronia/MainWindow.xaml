@@ -1,0 +1,101 @@
+﻿<controls:MetroWindow x:Class="Angeronia.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        Height="350" Width="525"
+        BorderBrush="{DynamicResource AccentColorBrush}"
+        BorderThickness="1"
+        Margin="15"
+        Title="{Binding Path=SessionManager.CurrentlyLoggedInUsername, UpdateSourceTrigger=PropertyChanged, StringFormat=Angeronia: {0}}">
+    
+    <controls:MetroWindow.Resources>
+
+    </controls:MetroWindow.Resources>
+    
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands>
+            <Button x:Name="SettingsButton" Click="OnSettingsButtonClick">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_cogs}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Margin="4 0 0 0" VerticalAlignment="Center" Text="Settings" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            <Button Click="ToggleLock">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_lock}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                    <TextBlock Margin="8 0 0 0" VerticalAlignment="Center" Text="Lock" />
+                </StackPanel>
+            </Button>
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
+
+    <Border BorderThickness="10">
+        <controls:MetroAnimatedTabControl>
+            <TabItem Header="Profile">
+                Bacon ipsum dolor sit amet tri-tip rump venison boudin andouille. Bacon andouille boudin turkey, pig pork chop ham. Pastrami bresaola kielbasa flank pig beef. Fatback pork landjaeger beef ribs ham, sirloin ribeye brisket rump chicken. Chuck kielbasa beef ribs sausage filet mignon bacon meatloaf leberkas jowl porchetta pastrami flank. Salami bacon swine tongue boudin pig sirloin short loin chuck ham hock doner porchetta meatball chicken. Fatback pork meatball, tenderloin bacon pork chop kielbasa pig.
+            </TabItem>
+            <TabItem Header="Encrypt">
+                Bacon ipsum dolor sit amet chuck pork chop ground round ham frankfurter spare ribs, venison ball tip turducken pork loin corned beef sirloin. Short ribs pig tenderloin jerky, chicken strip steak beef ribs. Drumstick meatloaf meatball pork prosciutto tri-tip boudin rump turkey doner ham hock corned beef shankle short ribs. Pork belly capicola tri-tip drumstick pork chop. Kevin ham hock jowl beef pork chop fatback, swine rump ham biltong tail cow strip steak leberkas tongue. Flank doner capicola cow hamburger strip steak. Shankle turkey kielbasa jowl capicola shoulder.
+            </TabItem>
+            <TabItem Header="Decrypt">
+                Salami bresaola pork loin, biltong sausage swine venison ground round landjaeger boudin turducken strip steak cow fatback pancetta. Bacon shoulder ground round capicola meatball ball tip brisket drumstick pancetta meatloaf leberkas t-bone pork chop kevin. Beef ball tip jerky, shank pancetta prosciutto pork porchetta salami tri-tip corned beef ribeye rump kielbasa meatball. Boudin tri-tip jowl fatback. Cow drumstick turducken boudin, pork doner frankfurter swine turkey tri-tip shank brisket.
+            </TabItem>
+            <TabItem Header="Track">
+                <ListView ItemsSource="{Binding SessionManager.Session.Tracking}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{Binding Image}"></Image>
+                                <StackPanel Orientation="Vertical">
+                                    <Label>Name</Label>
+                                    <TextBlock Text="{Binding Name}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </TabItem>
+        </controls:MetroAnimatedTabControl>
+    </Border>
+
+    <controls:MetroWindow.Flyouts>
+        <controls:FlyoutsControl>
+            <controls:Flyout x:Name="SettingsFlyout" Header="Settings" Position="Right" Width="250" Theme="Accent">
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Orientation="Vertical">
+                        <controls:ToggleSwitch Header="Paranoid Logout" IsChecked="{Binding Path=Settings.ParanoidLogout, Mode=TwoWay}">
+                            <controls:ToggleSwitch.ToolTip>
+                                <TextBlock>Log Out All Keybase Sessions</TextBlock>
+                            </controls:ToggleSwitch.ToolTip>
+                        </controls:ToggleSwitch>
+                        <controls:ToggleSwitch Header="Paranoid Locking" IsChecked="{Binding Path=Settings.ParanoidLocking, Mode=TwoWay}">
+                            <controls:ToggleSwitch.ToolTip>
+                                <TextBlock>Log Out Whenever The Application Loses Focus</TextBlock>
+                            </controls:ToggleSwitch.ToolTip>
+                        </controls:ToggleSwitch>
+                        <controls:ToggleSwitch Header="Paranoid Verification" IsChecked="{Binding Path=Settings.ParanoidVerification, Mode=TwoWay}">
+                            <controls:ToggleSwitch.ToolTip>
+                                <TextBlock>Verify All Messages From The Server</TextBlock>
+                            </controls:ToggleSwitch.ToolTip>
+                        </controls:ToggleSwitch>
+                        <controls:ToggleSwitch Header="Save Username" IsChecked="{Binding Path=Settings.SaveMostRecentUser, Mode=TwoWay}">
+                            <controls:ToggleSwitch.ToolTip>
+                                <TextBlock>Save The Most Recently Logged In User</TextBlock>
+                            </controls:ToggleSwitch.ToolTip>
+                        </controls:ToggleSwitch>
+                    </StackPanel>
+                </ScrollViewer>
+            </controls:Flyout>
+        </controls:FlyoutsControl>
+    </controls:MetroWindow.Flyouts>
+</controls:MetroWindow>

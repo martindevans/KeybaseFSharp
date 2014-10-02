@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Keybase.Test", "Keybase.Test\Keybase.Test.csproj", "{0459664D-1250-464B-A628-BA1A9FCEC208}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F777013F-8F9E-418B-A779-4493B59AA0B7}"
+	ProjectSection(SolutionItems) = preProject
+		keybase_fsharp.vsmdi = keybase_fsharp.vsmdi
+		Local.testsettings = Local.testsettings
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Keybase", "Keybase\Keybase.fsproj", "{01C1B9DB-3092-407C-8CBE-EF243FC8AFC1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Angeronia", "Angeronia\Angeronia.csproj", "{3BA2ADA7-A2C5-4890-A3BD-CE59B774A1C9}"
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = keybase_fsharp.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0459664D-1250-464B-A628-BA1A9FCEC208}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0459664D-1250-464B-A628-BA1A9FCEC208}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0459664D-1250-464B-A628-BA1A9FCEC208}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{0459664D-1250-464B-A628-BA1A9FCEC208}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{0459664D-1250-464B-A628-BA1A9FCEC208}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0459664D-1250-464B-A628-BA1A9FCEC208}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0459664D-1250-464B-A628-BA1A9FCEC208}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0459664D-1250-464B-A628-BA1A9FCEC208}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{0459664D-1250-464B-A628-BA1A9FCEC208}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{0459664D-1250-464B-A628-BA1A9FCEC208}.Release|x86.ActiveCfg = Release|Any CPU
+		{01C1B9DB-3092-407C-8CBE-EF243FC8AFC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01C1B9DB-3092-407C-8CBE-EF243FC8AFC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01C1B9DB-3092-407C-8CBE-EF243FC8AFC1}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{01C1B9DB-3092-407C-8CBE-EF243FC8AFC1}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{01C1B9DB-3092-407C-8CBE-EF243FC8AFC1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{01C1B9DB-3092-407C-8CBE-EF243FC8AFC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01C1B9DB-3092-407C-8CBE-EF243FC8AFC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01C1B9DB-3092-407C-8CBE-EF243FC8AFC1}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{01C1B9DB-3092-407C-8CBE-EF243FC8AFC1}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{01C1B9DB-3092-407C-8CBE-EF243FC8AFC1}.Release|x86.ActiveCfg = Release|Any CPU
+		{3BA2ADA7-A2C5-4890-A3BD-CE59B774A1C9}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{3BA2ADA7-A2C5-4890-A3BD-CE59B774A1C9}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{3BA2ADA7-A2C5-4890-A3BD-CE59B774A1C9}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{3BA2ADA7-A2C5-4890-A3BD-CE59B774A1C9}.Debug|x86.ActiveCfg = Debug|x86
+		{3BA2ADA7-A2C5-4890-A3BD-CE59B774A1C9}.Debug|x86.Build.0 = Debug|x86
+		{3BA2ADA7-A2C5-4890-A3BD-CE59B774A1C9}.Release|Any CPU.ActiveCfg = Release|x86
+		{3BA2ADA7-A2C5-4890-A3BD-CE59B774A1C9}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{3BA2ADA7-A2C5-4890-A3BD-CE59B774A1C9}.Release|Mixed Platforms.Build.0 = Release|x86
+		{3BA2ADA7-A2C5-4890-A3BD-CE59B774A1C9}.Release|x86.ActiveCfg = Release|x86
+		{3BA2ADA7-A2C5-4890-A3BD-CE59B774A1C9}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
