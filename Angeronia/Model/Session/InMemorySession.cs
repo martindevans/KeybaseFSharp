@@ -7,6 +7,7 @@ using System.Linq;
 using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Keybase;
 
 namespace Angeronia.Model.Session
 {
@@ -31,27 +32,44 @@ namespace Angeronia.Model.Session
             Task.Factory.StartNew(GetTrackees);
         }
 
-        private async void GetTrackees()
+        private void GetTrackees()
         {
-            var sigs = Keybase.Sig.Sigs(User.Id);
-            var tracks = sigs.Sigs.Select(sig => new
-            {
-                sig,
-                json = JObject.Parse(sig.PayloadJson)
-            }).Select(a => new
-            {
-                a.json,
-                a.sig,
-                track = a.json.SelectToken("body.track")
-            }).Where(a => a.track != null).ToArray();
+            var sigs = Sig.Sigs(User.Id);
 
-            // ^ this gets *old* track data, need to work out how to get the latest for any particular person
+            //Get all signatures, which are tracking signatures
+            //Then group by user id and get the latest tracking information for a user
+            var tracks = sigs.Sigs
+                .Where(a => a.SignatureType == Sig.SignatureType.Track)
+                .Select(sig => new
+                {
+                    sig,
+                    json = sig.AsTrackeeSignature
+                })
+                .GroupBy(a => a.json.Body.Track.Id)
+                .Select(a => a.Aggregate((x, y) => x.json.CTime > y.json.CTime ? x : y));
 
-            for (int i = 0; i < 100; i++)
-			{
-                App.Current.Dispatcher.Invoke(new Action(() => _tracking.Add(new Tracked(i.ToString(), "https://www.gravatar.com/avatar/b20a2b2684e66eceb87a9e57c930649a"))));
-                await Task.Delay(200);
-			}
+            foreach (var trackee in tracks)
+            {
+                bool validateSignature = ValidateSignature(trackee.sig.PayloadJson, trackee.sig.Signature);
+
+                var publicKeyFingerprint = trackee.json.Body.Track.Key.KeyFingerprint;
+                var user = Keybase.User.Lookup.KeyFingerprint(publicKeyFingerprint);
+
+                if (user.Them.Length > 0)
+                {
+                    var username = trackee.json.Body.Track.Basics.Username;
+                    var image = (user.Them[0].Pictures == null || user.Them[0].Pictures.Primary == null) ? "/Images/no_photo.png" : user.Them[0].Pictures.Primary.Url;
+
+                    App.Current.Dispatcher.Invoke(() => _tracking.Add(new Tracked(username, image, publicKeyFingerprint, validateSignature)));
+                }
+            }
+        }
+
+        private int _isValid = 0;
+        private bool ValidateSignature(string payload, string signature)
+        {
+            return Interlocked.Increment(ref _isValid) % 2 == 1;
+            return true;    //todo: Check signature
         }
     }
 }

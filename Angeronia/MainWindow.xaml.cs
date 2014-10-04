@@ -4,6 +4,9 @@ using Angeronia.Model.Session;
 using Angeronia.Model.Settings;
 using MahApps.Metro.Controls.Dialogs;
 using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Windows.Navigation;
+using System.Windows.Controls;
 
 namespace Angeronia
 {
@@ -58,10 +61,13 @@ namespace Angeronia
                 InitialUsername = username ?? _settings.MostRecentlyLoggedInUser,
                 UsernameWatermark = "Username",
                 PasswordWatermark = "Password",
+                AffirmativeButtonText = "Login",
                 NegativeButtonText = "Quit",
+                AnimateHide = true,
+                AnimateShow = true,
                 NegativeButtonVisibility = Visibility.Visible,
             });
-            
+
             if (credentials == null)
                 Application.Current.Shutdown();
             else
@@ -94,6 +100,19 @@ namespace Angeronia
         private void OnSettingsButtonClick(object sender, RoutedEventArgs e)
         {
             SettingsFlyout.IsOpen = true;
+        }
+
+        private void ShowPrimaryKey(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void NavigateToKeyUserInTag(object sender, RoutedEventArgs e)
+        {
+            string user = (string)((Control)sender).Tag;
+            var uri = new Uri(new Uri("http://keybase.io"), user);
+
+            Process.Start(uri.ToString());
         }
     }
 }

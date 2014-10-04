@@ -42,7 +42,49 @@
     <Border BorderThickness="10">
         <controls:MetroAnimatedTabControl>
             <TabItem Header="Profile">
-                Bacon ipsum dolor sit amet tri-tip rump venison boudin andouille. Bacon andouille boudin turkey, pig pork chop ham. Pastrami bresaola kielbasa flank pig beef. Fatback pork landjaeger beef ribs ham, sirloin ribeye brisket rump chicken. Chuck kielbasa beef ribs sausage filet mignon bacon meatloaf leberkas jowl porchetta pastrami flank. Salami bacon swine tongue boudin pig sirloin short loin chuck ham hock doner porchetta meatball chicken. Fatback pork meatball, tenderloin bacon pork chop kielbasa pig.
+                <StackPanel Orientation="Horizontal" DataContext="{Binding SessionManager.Session.User}">
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="{Binding Pictures.Primary.Url, TargetNullValue=/Images/no_photo.png}" Width="150" Height="150" VerticalAlignment="Top">
+                            <Image.Clip>
+                                <EllipseGeometry Center="75,75" RadiusX="75" RadiusY="75" />
+                            </Image.Clip>
+                        </Image>
+                        <TextBlock Text="{Binding Profile.FullName}" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding Profile.Bio}" HorizontalAlignment="Center" FontSize="15"/>
+                        <TextBlock Text="{Binding Profile.Location}" HorizontalAlignment="Center" FontSize="15"/>
+                        
+                    </StackPanel>
+                    <Border BorderThickness="5">
+                        <StackPanel Orientation="Vertical">
+
+                            <Button Click="NavigateToKeyUserInTag" Tag="{Binding Basics.Username, Mode=OneWay}">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <ContentPresenter />
+                                    </ControlTemplate>
+                                </Button.Template>
+                                <TextBlock Text="{Binding Basics.Username, StringFormat=keybase.io/{0}, Mode=OneWay}" FontSize="24" FontWeight="Light" TextDecorations="None" />
+                            </Button>
+
+                            <Button Click="ShowPrimaryKey">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <ContentPresenter />
+                                    </ControlTemplate>
+                                </Button.Template>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} ({1} bits)">
+                                            <Binding Path="PublicKeys.Primary.KeyFingerprint" />
+                                            <Binding Path="PublicKeys.Primary.KeyBits" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </Button>
+                            
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
             </TabItem>
             <TabItem Header="Encrypt">
                 Bacon ipsum dolor sit amet chuck pork chop ground round ham frankfurter spare ribs, venison ball tip turducken pork loin corned beef sirloin. Short ribs pig tenderloin jerky, chicken strip steak beef ribs. Drumstick meatloaf meatball pork prosciutto tri-tip boudin rump turkey doner ham hock corned beef shankle short ribs. Pork belly capicola tri-tip drumstick pork chop. Kevin ham hock jowl beef pork chop fatback, swine rump ham biltong tail cow strip steak leberkas tongue. Flank doner capicola cow hamburger strip steak. Shankle turkey kielbasa jowl capicola shoulder.
@@ -54,13 +96,51 @@
                 <ListView ItemsSource="{Binding SessionManager.Session.Tracking}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <Image Source="{Binding Image}"></Image>
-                                <StackPanel Orientation="Vertical">
-                                    <Label>Name</Label>
-                                    <TextBlock Text="{Binding Name}"/>
-                                </StackPanel>
-                            </StackPanel>
+                            <Border BorderThickness="5">
+                                <Grid>
+                                    <Grid  Panel.ZIndex="1000">
+                                        <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Crimson" Opacity=".7" />
+                                        <Border HorizontalAlignment="Center" VerticalAlignment="Center" Background="Red" Padding="10" BorderBrush="Firebrick" BorderThickness="2">
+                                            <StackPanel Orientation="Vertical">
+                                                <TextBlock>Tracking Signature Failed To Validate!</TextBlock>
+                                                <TextBlock>Instructions To Validate Go Here</TextBlock>
+                                                <TextBlock>Plus Other Stuff</TextBlock>
+                                                <TextBlock>Maybe A List Of Proofs And Options To Check Them</TextBlock>
+                                                <TextBlock>One By One With Tick Boxes</TextBlock>
+                                                <TextBlock>And A Big Friendly Button</TextBlock>
+                                                <TextBlock>To Sign And Push Validation To Server</TextBlock>
+                                            </StackPanel>
+                                        </Border>
+
+                                        <Grid.Style>
+                                            <Style TargetType="Grid">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsSignatureValid}" Value="True">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Grid.Style>
+                                    </Grid>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="{Binding ImageUrl}" Width="100" Height="100" VerticalAlignment="Top"></Image>
+                                        <StackPanel Orientation="Vertical">
+                                            <Button Click="NavigateToKeyUserInTag" Tag="{Binding Name, Mode=OneWay}">
+                                                <Button.Template>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <ContentPresenter />
+                                                    </ControlTemplate>
+                                                </Button.Template>
+                                                <TextBlock Text="{Binding Name, StringFormat=keybase.io/{0}, Mode=OneWay}" FontSize="18" FontWeight="Light" TextDecorations="None" />
+                                            </Button>
+                                            <TextBlock Text="{Binding Name}"/>
+                                            <TextBlock Text="{Binding Fingerprint}"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>

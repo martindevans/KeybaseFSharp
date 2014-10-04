@@ -25,12 +25,6 @@ namespace Angeronia.Model.Session
         {
             return Task<LoginStatus>.Factory.StartNew(() =>
             {
-                if (username == "test")
-                {
-                    Session = new InMemorySession(Keybase.Request.MakeClient(), new Keybase.User.User("test", new Keybase.User.Basics("test", 0, 0, 0, 0, 0, "salt"), new Keybase.User.Profile(0, "Full Name", "Location", "Biography For Test User")));
-                    return LoginStatus.Success;
-                }
-
                 var client = Keybase.Request.MakeClient();
 
                 var salt = Keybase.Session.GetSalt(client, username);

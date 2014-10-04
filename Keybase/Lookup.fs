@@ -23,11 +23,24 @@ type Profile =
         [<JsonProperty("bio")>]Bio: string
     }
 
+type Picture =
+    {
+        [<JsonProperty("url")>]Url: string
+        [<JsonProperty("width")>]Width: int
+        [<JsonProperty("height")>]Height: int
+    }
+
+type Pictures = 
+    {
+        [<JsonProperty("primary")>]Primary: Picture
+    }
+
 type User = 
     {
         [<JsonProperty("id")>]Id: string
         [<JsonProperty("basics")>]Basics: Basics
         [<JsonProperty("profile")>]Profile: Profile
+        [<JsonProperty("pictures")>]Pictures: Pictures
     }
 
 module Lookup =
