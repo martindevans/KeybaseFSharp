@@ -35,12 +35,53 @@ type Pictures =
         [<JsonProperty("primary")>]Primary: Picture
     }
 
+type Key =
+    {
+        [<JsonProperty("kid")>]KeyId: string
+        [<JsonProperty("key_type")>]KeyType: int
+        [<JsonProperty("bundle")>]Bundle: string
+        [<JsonProperty("mtime")>]MTime: int
+        [<JsonProperty("ctime")>]CTime: int
+        [<JsonProperty("key_fingerprint")>]KeyFingerprint: string
+        [<JsonProperty("key_bits")>]KeyBits: int
+        [<JsonProperty("key_algo")>]KeyAlgorithm: int
+    }
+
+type KeyCollection =
+    {
+        [<JsonProperty("primary")>]Primary: Key
+    }
+
+type Proof =
+    {
+        [<JsonProperty("proof_type")>]ProofType: string
+        [<JsonProperty("nametag")>]nametag: string
+        [<JsonProperty("state")>]State: int
+        [<JsonProperty("proof_url")>]ProofUrl: string
+        [<JsonProperty("sig_id")>]SignatureId: string
+        [<JsonProperty("proof_id")>]ProofId: string
+        [<JsonProperty("human_url")>]HumanUrl: string
+        [<JsonProperty("service_url")>]ServiceUrl: string
+        [<JsonProperty("presentation_group")>]PresentationGroup: string
+        [<JsonProperty("presentation_tag")>]PresentationTag: string
+    }
+
+type ProofsSummary =
+    {
+        //by_proof_type
+        //by_presentation_group
+        [<JsonProperty("all")>]All: Proof[]
+    }
+
 type User = 
     {
         [<JsonProperty("id")>]Id: string
         [<JsonProperty("basics")>]Basics: Basics
         [<JsonProperty("profile")>]Profile: Profile
         [<JsonProperty("pictures")>]Pictures: Pictures
+        [<JsonProperty("public_keys")>]PublicKeys: KeyCollection
+        [<JsonProperty("private_keys")>]PrivateKeys: KeyCollection
+        [<JsonProperty("proofs_summary")>]ProofsSummary: ProofsSummary
     }
 
 module Lookup =

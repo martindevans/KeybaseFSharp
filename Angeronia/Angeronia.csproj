@@ -119,6 +119,7 @@
     <Compile Include="Model\Session\InMemorySessionManager.cs" />
     <Compile Include="Model\Session\ISession.cs" />
     <Compile Include="Model\Session\ISessionManager.cs" />
+    <Compile Include="Model\Session\Proof.cs" />
     <Compile Include="Model\Session\Tracked.cs" />
     <Compile Include="Model\Settings\BaseSettings.cs" />
     <Compile Include="Model\Settings\InMemorySettings.cs" />

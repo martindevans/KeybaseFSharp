@@ -24,17 +24,24 @@ namespace Angeronia.Model.Session
             get { return _tracking; }
         }
 
+        private ObservableCollection<Proof> _proofs = new ObservableCollection<Proof>();
+        public ObservableCollection<Proof> Proofs
+        {
+            get { return _proofs; }
+        }
+
         public InMemorySession(RestClient session, Keybase.User.User user)
         {
             Client = session;
             User = user;
 
             Task.Factory.StartNew(GetTrackees);
+            Task.Factory.StartNew(GetProofs);
         }
 
         private void GetTrackees()
         {
-            var sigs = Sig.Sigs(User.Id);
+            var sigs = Sig.User(User.Id);
 
             //Get all signatures, which are tracking signatures
             //Then group by user id and get the latest tracking information for a user
@@ -50,19 +57,35 @@ namespace Angeronia.Model.Session
 
             foreach (var trackee in tracks)
             {
+                Thread.Sleep(50);
+
                 bool validateSignature = ValidateSignature(trackee.sig.PayloadJson, trackee.sig.Signature);
 
                 var publicKeyFingerprint = trackee.json.Body.Track.Key.KeyFingerprint;
                 var user = Keybase.User.Lookup.KeyFingerprint(publicKeyFingerprint);
 
                 if (user.Them.Length > 0)
-                {
+                {   
                     var username = trackee.json.Body.Track.Basics.Username;
                     var image = (user.Them[0].Pictures == null || user.Them[0].Pictures.Primary == null) ? "/Images/no_photo.png" : user.Them[0].Pictures.Primary.Url;
 
-                    App.Current.Dispatcher.Invoke(() => _tracking.Add(new Tracked(username, image, publicKeyFingerprint, validateSignature)));
+                    var tracked = new Tracked(username, image, publicKeyFingerprint, validateSignature);
+                    App.Current.Dispatcher.Invoke(() => _tracking.Add(tracked));
                 }
             }
+        }
+
+        private void GetProofs()
+        {
+            Parallel.ForEach(User.ProofsSummary.All, proof =>
+            {
+                //todo: validate proof
+                var signature = Sig.SigId(proof.SignatureId);
+                bool validateSignature = ValidateSignature(null, null);
+
+                var prf = new Proof(proof.ProofType);
+                App.Current.Dispatcher.Invoke(() => _proofs.Add(prf));
+            });
         }
 
         private int _isValid = 0;

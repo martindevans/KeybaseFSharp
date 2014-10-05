@@ -102,15 +102,18 @@ namespace Angeronia
             SettingsFlyout.IsOpen = true;
         }
 
-        private void ShowPrimaryKey(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void NavigateToKeyUserInTag(object sender, RoutedEventArgs e)
+        private void ShowPrimaryKeyForUserInTag(object sender, RoutedEventArgs e)
         {
             string user = (string)((Control)sender).Tag;
-            var uri = new Uri(new Uri("http://keybase.io"), user);
+            var uri = new Uri(new Uri("https://keybase.io"), user + "/key.asc");
+
+            Process.Start(uri.ToString());
+        }
+
+        private void NavigateToKeybaseUserInTag(object sender, RoutedEventArgs e)
+        {
+            string user = (string)((Control)sender).Tag;
+            var uri = new Uri(new Uri("https://keybase.io"), user);
 
             Process.Start(uri.ToString());
         }

@@ -96,7 +96,12 @@ module Sig =
             [<JsonProperty("sigs")>]Sigs: Sig[]
         }
 
-    let Sigs (userId : string) =
+    let User (userId : string) =
         Request.MakeRequest<SigResponse> (Request.MakeClient()) "_/api/1.0/sig/get.json" Method.GET (fun a ->
             a.AddParameter("uid", userId)
+        )
+
+    let SigId (sigId : string) =
+        Request.MakeRequest<SigResponse> (Request.MakeClient()) "_/api/1.0/sig/get.json" Method.GET (fun a ->
+            a.AddParameter("sig_id", sigId)
         )

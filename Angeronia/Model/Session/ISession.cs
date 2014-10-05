@@ -10,5 +10,7 @@ namespace Angeronia.Model.Session
         Keybase.User.User User { get; }
 
         ObservableCollection<Tracked> Tracking { get; }
+
+        ObservableCollection<Proof> Proofs { get; }
     }
 }

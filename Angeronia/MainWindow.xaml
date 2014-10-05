@@ -52,12 +52,11 @@
                         <TextBlock Text="{Binding Profile.FullName}" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold"/>
                         <TextBlock Text="{Binding Profile.Bio}" HorizontalAlignment="Center" FontSize="15"/>
                         <TextBlock Text="{Binding Profile.Location}" HorizontalAlignment="Center" FontSize="15"/>
-                        
                     </StackPanel>
                     <Border BorderThickness="5">
                         <StackPanel Orientation="Vertical">
 
-                            <Button Click="NavigateToKeyUserInTag" Tag="{Binding Basics.Username, Mode=OneWay}">
+                            <Button Click="NavigateToKeybaseUserInTag" Tag="{Binding Basics.Username, Mode=OneWay}">
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
                                         <ContentPresenter />
@@ -65,8 +64,7 @@
                                 </Button.Template>
                                 <TextBlock Text="{Binding Basics.Username, StringFormat=keybase.io/{0}, Mode=OneWay}" FontSize="24" FontWeight="Light" TextDecorations="None" />
                             </Button>
-
-                            <Button Click="ShowPrimaryKey">
+                            <Button Click="ShowPrimaryKeyForUserInTag" Tag="{Binding Basics.Username, Mode=OneWay}">
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
                                         <ContentPresenter />
@@ -81,7 +79,26 @@
                                     </TextBlock.Text>
                                 </TextBlock>
                             </Button>
-                            
+                            <ListView ItemsSource="{Binding ProofsSummary.All}" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border BorderThickness="3">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Rectangle Width="40" Height="40" Stretch="UniformToFill" >
+                                                    <Rectangle.Fill>
+                                                        <VisualBrush Visual="{StaticResource appbar_twitter_bird}" />
+                                                    </Rectangle.Fill>
+                                                </Rectangle>
+                                                <Border BorderThickness="2">
+                                                    <StackPanel Orientation="Vertical">
+                                                        <TextBlock Text="{Binding ProofType, StringFormat=Proof Type: {0}, Mode=OneWay}" FontSize="18" FontWeight="Light" TextDecorations="None" />
+                                                    </StackPanel>
+                                                </Border>
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
                         </StackPanel>
                     </Border>
                 </StackPanel>
@@ -127,7 +144,7 @@
                                     <StackPanel Orientation="Horizontal">
                                         <Image Source="{Binding ImageUrl}" Width="100" Height="100" VerticalAlignment="Top"></Image>
                                         <StackPanel Orientation="Vertical">
-                                            <Button Click="NavigateToKeyUserInTag" Tag="{Binding Name, Mode=OneWay}">
+                                            <Button Click="NavigateToKeybaseUserInTag" Tag="{Binding Name, Mode=OneWay}">
                                                 <Button.Template>
                                                     <ControlTemplate TargetType="Button">
                                                         <ContentPresenter />
