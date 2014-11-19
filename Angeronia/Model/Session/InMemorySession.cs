@@ -1,13 +1,10 @@
-﻿using RestSharp;
-using System.Collections.Generic;
+﻿using System.Windows;
+using Keybase;
+using RestSharp;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using System;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Keybase;
 
 namespace Angeronia.Model.Session
 {
@@ -18,13 +15,13 @@ namespace Angeronia.Model.Session
 
         public RestClient Client { get; private set; }
 
-        private ObservableCollection<Tracked> _tracking = new ObservableCollection<Tracked>();
+        private readonly ObservableCollection<Tracked> _tracking = new ObservableCollection<Tracked>();
         public ObservableCollection<Tracked> Tracking
         {
             get { return _tracking; }
         }
 
-        private ObservableCollection<Proof> _proofs = new ObservableCollection<Proof>();
+        private readonly ObservableCollection<Proof> _proofs = new ObservableCollection<Proof>();
         public ObservableCollection<Proof> Proofs
         {
             get { return _proofs; }
@@ -70,7 +67,7 @@ namespace Angeronia.Model.Session
                     var image = (user.Them[0].Pictures == null || user.Them[0].Pictures.Primary == null) ? "/Images/no_photo.png" : user.Them[0].Pictures.Primary.Url;
 
                     var tracked = new Tracked(username, image, publicKeyFingerprint, validateSignature);
-                    App.Current.Dispatcher.Invoke(() => _tracking.Add(tracked));
+                    Application.Current.Dispatcher.Invoke(() => _tracking.Add(tracked));
                 }
             }
         }
@@ -79,20 +76,26 @@ namespace Angeronia.Model.Session
         {
             Parallel.ForEach(User.ProofsSummary.All, proof =>
             {
-                //todo: validate proof
-                var signature = Sig.SigId(proof.SignatureId);
-                bool validateSignature = ValidateSignature(null, null);
+                
+                var sig = Sig.SigId(proof.SignatureId);
+                bool isSignatureValid = sig.Sigs.Any() && ValidateProofJson(sig.Sigs.Single().PayloadJson) && ValidateSignature(sig.Sigs.Single().PayloadJson, sig.Sigs.Single().Signature);
 
-                var prf = new Proof(proof.ProofType);
-                App.Current.Dispatcher.Invoke(() => _proofs.Add(prf));
+                var prf = new Proof(proof.ProofType, proof.NameTag, proof.ProofUrl, isSignatureValid);
+                Application.Current.Dispatcher.Invoke(() => _proofs.Add(prf));
             });
         }
 
         private int _isValid = 0;
         private bool ValidateSignature(string payload, string signature)
         {
+            //todo: Check signature
             return Interlocked.Increment(ref _isValid) % 2 == 1;
-            return true;    //todo: Check signature
+        }
+
+        private bool ValidateProofJson(string proofPayload)
+        {
+            //todo: validate proof
+            return true;
         }
     }
 }

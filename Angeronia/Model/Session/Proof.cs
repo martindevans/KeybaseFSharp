@@ -1,19 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Angeronia.Model.Session
 {
     public class Proof
     {
-        private string _type;
+        private readonly string _type;
         public string Type { get { return _type; } }
 
-        public Proof(string type)
+        private readonly string _nametag;
+        public string Nametag { get { return _nametag; } }
+
+        private readonly string _proofUrl;
+        public string ProofUrl { get { return _proofUrl; } }
+
+        private readonly bool _isProofValid;
+        public bool IsProofValid { get { return _isProofValid; } }
+
+        public Proof(string type, string nametag, string proofUrl, bool isProofValid)
         {
             _type = type;
+            _nametag = nametag;
+            _proofUrl = proofUrl;
+            _isProofValid = isProofValid;
         }
     }
 }

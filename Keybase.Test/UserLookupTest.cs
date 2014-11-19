@@ -19,8 +19,6 @@ namespace Keybase.Test
             Assert.AreEqual("martindevans", response.Them[0].Basics.Username);
             Assert.AreEqual(1410965719, response.Them[0].Basics.CTime);
             Assert.AreEqual(1410965719, response.Them[0].Basics.MTime);
-            Assert.AreEqual(22, response.Them[0].Basics.IdVersion);
-            Assert.AreEqual(1412036434, response.Them[0].Basics.LastIdChange);
         }
 
         private static void AssertNobody(Lookup.UserResponse response)
@@ -102,8 +100,7 @@ namespace Keybase.Test
         [TestMethod]
         public void LookupByHackerNewsFindsExistingUser()
         {
-            //I haven't got enough karma to prove my HN account :'(
-            //AssertMartindevans(Lookup.HackerNews("martindevans"));
+            AssertMartindevans(Lookup.HackerNews("martindevans"));
         }
 
         [TestMethod]

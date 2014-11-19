@@ -55,7 +55,7 @@ type KeyCollection =
 type Proof =
     {
         [<JsonProperty("proof_type")>]ProofType: string
-        [<JsonProperty("nametag")>]nametag: string
+        [<JsonProperty("nametag")>]NameTag: string
         [<JsonProperty("state")>]State: int
         [<JsonProperty("proof_url")>]ProofUrl: string
         [<JsonProperty("sig_id")>]SignatureId: string

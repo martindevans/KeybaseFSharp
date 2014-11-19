@@ -1,12 +1,11 @@
-﻿using System;
-using System.Windows;
-using Angeronia.Model.Session;
+﻿using Angeronia.Model.Session;
 using Angeronia.Model.Settings;
 using MahApps.Metro.Controls.Dialogs;
-using System.Threading.Tasks;
+using System;
 using System.Diagnostics;
-using System.Windows.Navigation;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 
 namespace Angeronia
 {
@@ -72,7 +71,7 @@ namespace Angeronia
                 Application.Current.Shutdown();
             else
             {
-                var loginProgress = await this.ShowProgressAsync("Logging In", "Validating Login Credentials With Keybase", false);
+                var loginProgress = await this.ShowProgressAsync("Logging In", "Validating Login Credentials With Keybase");
                 var loginResult = await _sessionManager.Login(credentials.Username, credentials.Password);
 
                 await loginProgress.CloseAsync();
@@ -80,13 +79,13 @@ namespace Angeronia
                 switch (loginResult)
                 {
                     case LoginStatus.FailedBadUser:
-                        Login("Invalid Username", username = credentials.Username);
+                        Login("Invalid Username", credentials.Username);
                         break;
                     case LoginStatus.FailedBadPassword:
-                        Login("Incorrect Password", username = credentials.Username);
+                        Login("Incorrect Password", credentials.Username);
                         break;
                     case LoginStatus.InvalidInput:
-                        Login("Invalid Credentials", username = credentials.Username);
+                        Login("Invalid Credentials", credentials.Username);
                         break;
                 }
             }
@@ -116,6 +115,11 @@ namespace Angeronia
             var uri = new Uri(new Uri("https://keybase.io"), user);
 
             Process.Start(uri.ToString());
+        }
+
+        private void HyperlinkOnRequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            Process.Start(e.Uri.ToString());
         }
     }
 }

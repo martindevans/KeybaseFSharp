@@ -1,12 +1,11 @@
-﻿using System;
+﻿using Angeronia.Extensions;
+using Angeronia.Model.Settings;
+using CryptSharp.Utility;
+using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Angeronia.Extensions;
-using Angeronia.Model.Settings;
-using CryptSharp;
-using CryptSharp.Utility;
 
 namespace Angeronia.Model.Session
 {

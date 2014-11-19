@@ -6,7 +6,8 @@
         BorderBrush="{DynamicResource AccentColorBrush}"
         BorderThickness="1"
         Margin="15"
-        Title="{Binding Path=SessionManager.CurrentlyLoggedInUsername, UpdateSourceTrigger=PropertyChanged, StringFormat=Angeronia: {0}}">
+        Title="{Binding Path=SessionManager.CurrentlyLoggedInUsername, UpdateSourceTrigger=PropertyChanged, StringFormat=Angeronia: {0}}"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
     
     <controls:MetroWindow.Resources>
 
@@ -79,7 +80,7 @@
                                     </TextBlock.Text>
                                 </TextBlock>
                             </Button>
-                            <ListView ItemsSource="{Binding ProofsSummary.All}" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                            <ListView ItemsSource="{Binding ProofsSummary.All}" ScrollViewer.VerticalScrollBarVisibility="Auto" VirtualizingPanel.IsVirtualizing="True">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <Border BorderThickness="3">
@@ -92,6 +93,11 @@
                                                 <Border BorderThickness="2">
                                                     <StackPanel Orientation="Vertical">
                                                         <TextBlock Text="{Binding ProofType, StringFormat=Proof Type: {0}, Mode=OneWay}" FontSize="18" FontWeight="Light" TextDecorations="None" />
+                                                        <TextBlock>
+                                                            <Hyperlink NavigateUri="{Binding ProofUrl}" RequestNavigate="HyperlinkOnRequestNavigate">
+                                                                <TextBlock Text="{Binding NameTag, Mode=OneWay}" FontSize="18" FontWeight="Light" TextDecorations="None" />
+                                                            </Hyperlink>
+                                                        </TextBlock>
                                                     </StackPanel>
                                                 </Border>
                                             </StackPanel>
@@ -110,7 +116,7 @@
                 Salami bresaola pork loin, biltong sausage swine venison ground round landjaeger boudin turducken strip steak cow fatback pancetta. Bacon shoulder ground round capicola meatball ball tip brisket drumstick pancetta meatloaf leberkas t-bone pork chop kevin. Beef ball tip jerky, shank pancetta prosciutto pork porchetta salami tri-tip corned beef ribeye rump kielbasa meatball. Boudin tri-tip jowl fatback. Cow drumstick turducken boudin, pork doner frankfurter swine turkey tri-tip shank brisket.
             </TabItem>
             <TabItem Header="Track">
-                <ListView ItemsSource="{Binding SessionManager.Session.Tracking}">
+                <ListView ItemsSource="{Binding SessionManager.Session.Tracking}" VirtualizingPanel.IsVirtualizing="True">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Border BorderThickness="5">
@@ -168,7 +174,7 @@
     <controls:MetroWindow.Flyouts>
         <controls:FlyoutsControl>
             <controls:Flyout x:Name="SettingsFlyout" Header="Settings" Position="Right" Width="250" Theme="Accent">
-                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <StackPanel Orientation="Vertical">
                         <controls:ToggleSwitch Header="Paranoid Logout" IsChecked="{Binding Path=Settings.ParanoidLogout, Mode=TwoWay}">
                             <controls:ToggleSwitch.ToolTip>
