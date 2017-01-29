@@ -1,4 +1,4 @@
-# Keybase F#
+# Keybase F&#35;
 
 This is primarily an F# wrapper around the [keybase](martindevans@gmail.com) API.
 
