@@ -5,6 +5,10 @@
 *.user
 *.vsmdi
 *.ncrunchsolution
+
+_Resharper.Caches
+_Resharper.Keybase
+
 Keybase.Test/bin
 Keybase.Test/obj
 Keybase/bin

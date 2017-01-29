@@ -6,7 +6,7 @@ namespace Angeronia.Extensions
     {
         public static string ToHexString(this byte[] bytes)
         {
-            return String.Join(String.Empty, Array.ConvertAll(bytes, x => x.ToString("X2")));
+            return string.Join(string.Empty, Array.ConvertAll(bytes, x => x.ToString("X2")));
         }
     }
 }
