@@ -7,6 +7,8 @@ module Session =
     open Newtonsoft.Json
     open Keybase.Response
     open Keybase.Request
+    open CryptSharp.Utility
+    open System.Text
 
     type SignupResponse = 
         {
@@ -43,11 +45,23 @@ module Session =
     let GetSalt (client : RestClient) (emailOrUsername : string) =
         Request.MakeRequest<GetSaltResponse> client "_/api/1.0/getsalt.json" Method.GET (fun a -> a.AddParameter("email_or_username", emailOrUsername))
 
-    let Login (client : RestClient) (emailOrUsername : string) (hmac_pwh : string) (login_session : string) =
+    let Login (client : RestClient) (emailOrUsername : string) (pdpka4 : string) (pdpka5 : string) =
         Request.MakeRequest<LoginResponse> client "_/api/1.0/login.json" Method.POST (fun a ->
-            a.AddParameter("email_or_username", emailOrUsername).AddParameter("hmac_pwh", hmac_pwh).AddParameter("login_session", login_session)
+            a.AddParameter("email_or_username", emailOrUsername).AddParameter("pdpka4", pdpka4).AddParameter("pdpka5", pdpka5)
         )
 
     let KillAll (client : RestClient) : bool =
         let response = Request.MakeRequest<KillAllSessionResponse> client "_/api/1.0/session/killall.json" Method.POST (fun a -> a :> IRestRequest)
         false
+
+    let LoginProcess (client : RestClient) (emailOrUsername : string) (password : string) =
+
+        let salt = GetSalt client emailOrUsername;
+        if (salt.Status.Name <> "OK") then
+            None
+        else
+            let passphraseStream = SCrypt.ComputeDerivedKey((Encoding.UTF8.GetBytes password), (Sodium.Utilities.HexToBinary salt.Salt), 32768, 8, 1, Nullable(), 256)
+            let v4 = passphraseStream.[192..224]
+            let v5 = passphraseStream.[224..256]
+
+            None

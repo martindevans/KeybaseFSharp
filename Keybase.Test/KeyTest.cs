@@ -48,7 +48,7 @@ R2Ohfw1Ks9GxTScI
         }
 
         [TestMethod]
-        public void GetKeyForNonExistingUserDoesSomethingUseful()
+        public void GetKeyForNonExistingUserReturnsNull()
         {
             var result = Key.Key(UserLookupTest.RandomString());
             Assert.IsNull(result);

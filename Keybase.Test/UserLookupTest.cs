@@ -29,10 +29,10 @@ namespace Keybase.Test
         private static readonly Random _r = new Random();
         public static string RandomString(int length = 20)
         {
-            const string CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             return new string(
                 Enumerable.Range(0, length)
-                .Select(_ => CHARS[_r.Next(CHARS.Length)])
+                .Select(_ => chars[_r.Next(chars.Length)])
                 .ToArray()
             );
         }

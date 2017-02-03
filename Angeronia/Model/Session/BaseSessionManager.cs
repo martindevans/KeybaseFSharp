@@ -12,7 +12,7 @@ namespace Angeronia.Model.Session
     public abstract class BaseSessionManager
         : ISessionManager
     {
-        protected ISettings Settings { get; private set; }
+        protected ISettings Settings { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -31,24 +31,15 @@ namespace Angeronia.Model.Session
                 if (_session != null)
                     Settings.MostRecentlyLoggedInUser = _session.User.Basics.Username;
 
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs("Session"));
-                    PropertyChanged(this, new PropertyChangedEventArgs("IsLoggedIn"));
-                    PropertyChanged(this, new PropertyChangedEventArgs("CurrentlyLoggedInUsername"));
-                }
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Session"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsLoggedIn"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentlyLoggedInUsername"));
             }
         }
 
-        public bool IsLoggedIn
-        {
-            get { return _session != null; }
-        }
+        public bool IsLoggedIn => _session != null;
 
-        public string CurrentlyLoggedInUsername
-        {
-            get { return _session == null ? "" : _session.User.Basics.Username; }
-        }
+        public string CurrentlyLoggedInUsername => _session == null ? "" : _session.User.Basics.Username;
 
         protected BaseSessionManager(ISettings settings)
         {

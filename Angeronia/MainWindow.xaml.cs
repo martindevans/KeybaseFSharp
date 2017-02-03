@@ -85,7 +85,7 @@ namespace Angeronia
                         Login("Incorrect Password", credentials.Username);
                         break;
                     case LoginStatus.InvalidInput:
-                        Login("Invalid Credentials", credentials.Username);
+                        Login("Unknown Error!", credentials.Username);
                         break;
                 }
             }
